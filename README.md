@@ -1,4 +1,8 @@
-https://roadmap.sh/projects/ec2-instance
+## 📚 Project Reference
+
+This project is based on the roadmap.sh EC2 instance project:
+
+👉 https://roadmap.sh/projects/ec2-instance
 
 # lucas-aws-ec2-roadpam
 
