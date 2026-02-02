@@ -21,7 +21,7 @@ This project demonstrates how to:
 
 ## 🚀 Step-by-Step Guide
 
-### 1. Launch EC2 Instance
+### Step 1: Launch EC2 Instance
 
 1. Open AWS Console → EC2 → Launch Instance
 2. Choose **Ubuntu Server AMI**
@@ -35,23 +35,36 @@ This project demonstrates how to:
 
 ---
 
-### 2. Connect to EC2 via SSH
+############   If you don't have a public key for key-pair run this command and just hit 'ENTER' or "RETURN' 4 times. NOTE: Please do not press any keyboard ############
+
+```
+ssh-keygen
+```
+
+### Step 2: Connect to EC2 via SSH
 
 From your Ubuntu machine:
 
 ```
 ssh -i ~/.ssh/id_ed25519 ubuntu@<EC2_PUBLIC_IP>
-
+```
+Step 3: Update System Packages
+```
 sudo apt update
 sudo apt upgrade -y
-
+```
+Step 4: Install Nginx
+```
 sudo apt install nginx -y
 
 sudo systemctl start nginx
 sudo systemctl enable nginx
-
+```
+Step 5: Deploy Static Website
+```
 sudo nano /var/www/html/index.html
 ```
+
 ```
 <!DOCTYPE html>
 <html>
@@ -60,61 +73,55 @@ sudo nano /var/www/html/index.html
 </head>
 <body>
     <h1>Welcome to my EC2 website!</h1>
-    <p>This is a static website hosted on AWS EC2 using Nginx.</p>
+    <p>This website is hosted on AWS EC2 using Nginx.</p>
 </body>
 </html>
+
 ```
+Step 6: Verify Website via Public IP
 
-Verify Website via Public IP
-
-Open your browser:
 ```
 http://<EC2_PUBLIC_IP>
+
 ```
 
 Route 53 Domain Setup
 🎯 Step 7: Register Domain (or use existing)
 
-Go to AWS Console → Route 53
+   1. Go to AWS Console → Route 53
 
-Click Registered domains
+   2. Click Registered domains
 
-Register a new domain or use an existing one
+   3. Register a new domain or use an existing one
 
-   Create Hosted Zone
+Step 8: Create Hosted Zone
 
-Go to Route 53 → Hosted zones
+   1. Go to Route 53 → Hosted zones
 
-Click Create hosted zone
+   2. Click Create hosted zone
 
-Enter your domain name
+   3. Enter your domain name
 
-Choose Public hosted zone
+   4. Choose Public hosted zone
 
- Add DNS Record (A Record)
+Step 9: Add DNS Record (A Record)
 
-Open your hosted zone
+   1. Open your hosted zone
 
-Click Create record
+   2. Click Create record
+   
+   3. Choose Record type: A
+   
+   4. Name: @
+   
+   5. Value: <EC2_PUBLIC_IP>
 
-Choose Record type: A
+   6. Click Create records
 
-Name: @
-
-Value: <EC2_PUBLIC_IP>
-
-Click Create records
-
-
-Wait for DNS Propagation
-
-Use:
-```
-dig yourdomain.com
-```
 
 HTTPS Setup with Let’s Encrypt
-   Install Certbot using Snap
+✅ Step 10: Install Certbot using Snap
+
 ```
 sudo apt update
 sudo apt install snapd -y
@@ -124,24 +131,28 @@ sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 ```
 
-Issue SSL Certificate
+Step 11: Issue SSL Certificate
+
 ```
 sudo certbot --nginx
 ```
+   Follow prompts:
 
-Follow prompts:
+   Enter email
 
-Enter email
+   Agree to terms
 
-Agree to terms
+   Select your domain
 
-Select your domain
-
-Enable redirect from HTTP → HTTPS
+   Enable redirect from HTTP → HTTPS
 
 Final Access
 
 Your website should now be accessible via:
+
 ```
 https://yourdomain.com
+
 ```
+
+
