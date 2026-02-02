@@ -1,3 +1,5 @@
+https://roadmap.sh/projects/ec2-instance
+
 # lucas-aws-ec2-roadpam
 
 # AWS EC2 Static Website Deployment (Ubuntu + Nginx)
