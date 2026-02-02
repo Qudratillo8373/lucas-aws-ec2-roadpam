@@ -35,7 +35,7 @@ This project demonstrates how to:
 
 ---
 
-############   If you don't have a public key for key-pair run this command and just hit 'ENTER' or "RETURN' 4 times. NOTE: Please do not press any keyboard ############
+REMAINDER: If you don't have a public key for key-pair run this command and just hit 'ENTER' or "RETURN' 4 times. NOTE: Please do not press any keyboard 
 
 ```
 ssh-keygen
@@ -138,15 +138,16 @@ sudo certbot --nginx
 ```
    Follow prompts:
 
-   Enter email
+   1. Enter email
 
-   Agree to terms
+   2. Agree to terms
 
-   Select your domain
+   3. Select your domain
 
-   Enable redirect from HTTP → HTTPS
+   4. Enable redirect from HTTP → HTTPS
 
-Final Access
+
+Final Access:
 
 Your website should now be accessible via:
 
@@ -155,4 +156,16 @@ https://yourdomain.com
 
 ```
 
+Notes & Troubleshooting
+❌ “certbot package not found”
+
+Install Certbot using Snap (shown above).
+
+❌ “Let’s Encrypt does not issue certificates for IP”
+
+You must use a domain name.
+
+❌ DNS not working
+
+Wait 5–10 minutes for DNS propagation.
 
