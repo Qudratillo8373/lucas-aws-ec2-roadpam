@@ -64,3 +64,84 @@ sudo nano /var/www/html/index.html
 </body>
 </html>
 ```
+
+Verify Website via Public IP
+
+Open your browser:
+```
+http://<EC2_PUBLIC_IP>
+```
+
+Route 53 Domain Setup
+🎯 Step 7: Register Domain (or use existing)
+
+Go to AWS Console → Route 53
+
+Click Registered domains
+
+Register a new domain or use an existing one
+
+   Create Hosted Zone
+
+Go to Route 53 → Hosted zones
+
+Click Create hosted zone
+
+Enter your domain name
+
+Choose Public hosted zone
+
+ Add DNS Record (A Record)
+
+Open your hosted zone
+
+Click Create record
+
+Choose Record type: A
+
+Name: @
+
+Value: <EC2_PUBLIC_IP>
+
+Click Create records
+
+
+Wait for DNS Propagation
+
+Use:
+```
+dig yourdomain.com
+```
+
+HTTPS Setup with Let’s Encrypt
+   Install Certbot using Snap
+```
+sudo apt update
+sudo apt install snapd -y
+sudo snap install core
+sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+```
+
+Issue SSL Certificate
+```
+sudo certbot --nginx
+```
+
+Follow prompts:
+
+Enter email
+
+Agree to terms
+
+Select your domain
+
+Enable redirect from HTTP → HTTPS
+
+Final Access
+
+Your website should now be accessible via:
+```
+https://yourdomain.com
+```
