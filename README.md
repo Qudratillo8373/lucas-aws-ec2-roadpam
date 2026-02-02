@@ -169,3 +169,75 @@ You must use a domain name.
 
 Wait 5–10 minutes for DNS propagation.
 
+
+Step 12: Prepare EC2 for CI/CD
+
+Create deployment directory (already default for Nginx):
+
+```
+sudo chown -R ubuntu:ubuntu /var/www/html
+
+```
+
+Step 13: Add GitHub Secrets
+
+In your GitHub repository:
+
+Settings → Secrets → Actions → New Repository Secret
+
+Add:
+```
+Name 	            Value
+EC2_HOST	         Your EC2 Public IP
+EC2_USER	         ubuntu
+EC2_SSH_KEY	         Private SSH key (content of id_ed25519)
+```
+⚠️ Paste the private key content, not the filename.
+
+Step 14: GitHub Actions Workflow
+
+Create this file in your repo:
+
+```
+.github/workflows/deploy.yml
+```
+
+```
+name: Deploy Static Website to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          sudo rm -rf /var/www/html/*
+          sudo cp -r * /var/www/html/
+          sudo systemctl reload nginx
+```
+
+Step 15: Test CI/CD
+
+   1. Modify index.html
+   
+   2. Commit & push to main
+   
+   3. GitHub Actions runs automatically
+   
+   4. Website updates live 🎉
+
+
